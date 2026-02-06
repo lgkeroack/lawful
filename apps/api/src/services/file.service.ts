@@ -11,10 +11,17 @@ import { createModuleLogger } from '../lib/logger.js';
 
 const logger = createModuleLogger('file.service');
 
-// SECURITY: Strict allowlist — only PDF and TXT per specification
 const ALLOWED_MIME_TYPES: Record<string, string> = {
   'application/pdf': 'pdf',
   'text/plain': 'txt',
+  'application/msword': 'doc',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
+  'application/vnd.ms-excel': 'xls',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
+  'text/csv': 'csv',
+  'application/rtf': 'rtf',
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
 };
 
 const ALLOWED_EXTENSIONS = new Set(Object.values(ALLOWED_MIME_TYPES));
@@ -41,10 +48,13 @@ export class FileService {
       return { mimeType: detected.mime, extension: ext };
     }
 
-    // Fall back to extension check for text files (no magic bytes for plain text)
+    // Fall back to extension check for text-based files (no reliable magic bytes)
     const fileExt = path.extname(originalFilename).toLowerCase().replace('.', '');
     if (fileExt === 'txt') {
       return { mimeType: 'text/plain', extension: 'txt' };
+    }
+    if (fileExt === 'csv') {
+      return { mimeType: 'text/csv', extension: 'csv' };
     }
 
     throw new FileTypeError(
