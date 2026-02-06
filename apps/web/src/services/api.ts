@@ -11,7 +11,7 @@ import type {
   PaginatedResponse,
   JurisdictionTreeNode,
   ApiErrorResponse,
-} from '@lexvault/shared';
+} from '@lexterrae/shared';
 
 const BASE_URL = '/api';
 

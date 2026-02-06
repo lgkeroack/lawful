@@ -92,13 +92,13 @@ export class AuthService {
     const accessToken = jwt.sign(
       { userId, jti: accessJti, type: 'access' },
       env.JWT_SECRET,
-      { expiresIn: env.JWT_EXPIRY, issuer: 'lexvault', audience: 'lexvault-api' },
+      { expiresIn: env.JWT_EXPIRY as string & jwt.SignOptions['expiresIn'], issuer: 'lexterrae', audience: 'lexterrae-api' },
     );
 
     const refreshToken = jwt.sign(
       { userId, jti: refreshJti, type: 'refresh' },
       env.JWT_SECRET,
-      { expiresIn: env.JWT_REFRESH_EXPIRY, issuer: 'lexvault', audience: 'lexvault-api' },
+      { expiresIn: env.JWT_REFRESH_EXPIRY as string & jwt.SignOptions['expiresIn'], issuer: 'lexterrae', audience: 'lexterrae-api' },
     );
 
     return { accessToken, refreshToken };

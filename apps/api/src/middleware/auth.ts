@@ -6,8 +6,6 @@ import { logger } from '../lib/logger.js';
 
 export interface RequestContext {
   userId: string;
-  email?: string;
-  role?: string;
 }
 
 declare global {
@@ -40,10 +38,10 @@ export function authenticate(req: Request, _res: Response, next: NextFunction): 
     return;
   }
 
-  const token = parts[1];
+  const token = parts[1]!;
 
   try {
-    const decoded = jwt.verify(token, env.JWT_SECRET) as JwtPayload;
+    const decoded = jwt.verify(token, env.JWT_SECRET) as unknown as JwtPayload;
 
     if (!decoded.userId) {
       next(new AuthenticationError('Invalid token: missing userId'));

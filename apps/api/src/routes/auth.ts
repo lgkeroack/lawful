@@ -10,7 +10,7 @@ import {
   logoutSchema,
 } from '../validators/auth.validator.js';
 
-const router = Router();
+const router: ReturnType<typeof Router> = Router();
 
 /**
  * Rate limiter for login attempts: 10 requests per 15 minutes per IP.
@@ -21,7 +21,7 @@ const loginLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: {
-    type: 'https://lexvault.io/problems/rate-limit',
+    type: 'https://lexterrae.io/problems/rate-limit',
     title: 'Too Many Requests',
     status: 429,
     detail: 'Too many login attempts. Please try again later.',
@@ -38,7 +38,7 @@ const registerLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: {
-    type: 'https://lexvault.io/problems/rate-limit',
+    type: 'https://lexterrae.io/problems/rate-limit',
     title: 'Too Many Requests',
     status: 429,
     detail: 'Too many registration attempts. Please try again later.',

@@ -12,7 +12,7 @@ import {
 } from '../validators/document.validator.js';
 import { ValidationError } from '../lib/errors.js';
 
-const router = Router();
+const router: ReturnType<typeof Router> = Router();
 
 /**
  * Multer configuration for handling file uploads in memory.
@@ -79,16 +79,16 @@ router.get(
     try {
       const result = await documentService.getDocuments({
         userId: req.context!.userId,
-        page: req.query.page as unknown as number,
-        pageSize: req.query.pageSize as unknown as number,
-        search: req.query.search as string | undefined,
-        jurisdictionLevel: req.query.jurisdictionLevel as string | undefined,
-        jurisdictionId: req.query.jurisdictionId as string | undefined,
-        fileType: req.query.fileType as string | undefined,
-        sortBy: (req.query.sortBy as string) || 'uploadedAt',
-        sortOrder: (req.query.sortOrder as 'asc' | 'desc') || 'desc',
-        dateFrom: req.query.dateFrom ? new Date(req.query.dateFrom as string) : undefined,
-        dateTo: req.query.dateTo ? new Date(req.query.dateTo as string) : undefined,
+        page: req.query['page'] as unknown as number,
+        pageSize: req.query['pageSize'] as unknown as number,
+        search: req.query['search'] as string | undefined,
+        jurisdictionLevel: req.query['jurisdictionLevel'] as string | undefined,
+        jurisdictionId: req.query['jurisdictionId'] as string | undefined,
+        fileType: req.query['fileType'] as string | undefined,
+        sortBy: (req.query['sortBy'] as string) || 'uploadedAt',
+        sortOrder: (req.query['sortOrder'] as 'asc' | 'desc') || 'desc',
+        dateFrom: req.query['dateFrom'] ? new Date(req.query['dateFrom'] as string) : undefined,
+        dateTo: req.query['dateTo'] ? new Date(req.query['dateTo'] as string) : undefined,
       });
 
       res.status(200).json(result);
@@ -108,7 +108,7 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const document = await documentService.getDocument(
-        req.params.id,
+        req.params['id'] as string,
         req.context!.userId,
       );
 
@@ -132,7 +132,7 @@ router.patch(
 
       const document = await documentService.updateDocument({
         userId: req.context!.userId,
-        documentId: req.params.id,
+        documentId: req.params['id'] as string,
         title,
         description,
         tags,
@@ -157,7 +157,7 @@ router.delete(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       await documentService.deleteDocument(
-        req.params.id,
+        req.params['id'] as string,
         req.context!.userId,
         req.requestId,
         req.ip || '0.0.0.0',
@@ -180,14 +180,19 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await documentService.downloadDocument(
-        req.params.id,
+        req.params['id'] as string,
         req.context!.userId,
         req.requestId,
         req.ip || '0.0.0.0',
       );
 
+      // SECURITY: Force download, prevent browser from rendering potentially malicious content
       res.setHeader('Content-Type', result.contentType);
       res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(result.filename)}"`);
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      res.setHeader('X-Frame-Options', 'DENY');
+      res.setHeader('Content-Security-Policy', "default-src 'none'");
+      res.setHeader('Cache-Control', 'no-store');
       if (result.contentLength) {
         res.setHeader('Content-Length', result.contentLength);
       }

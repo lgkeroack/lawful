@@ -1,12 +1,12 @@
 {
-  "name": "lexvault",
+  "name": "lex-terrae",
   "private": true,
   "version": "0.1.0",
   "description": "Canadian Jurisdiction Document Management Platform",
   "scripts": {
     "dev": "pnpm --parallel -r run dev",
-    "dev:api": "pnpm --filter @lexvault/api dev",
-    "dev:web": "pnpm --filter @lexvault/web dev",
+    "dev:api": "pnpm --filter @lexterrae/api dev",
+    "dev:web": "pnpm --filter @lexterrae/web dev",
     "build": "pnpm -r run build",
     "lint": "pnpm -r run lint",
     "typecheck": "pnpm -r run typecheck",

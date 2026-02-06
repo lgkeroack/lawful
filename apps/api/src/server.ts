@@ -28,15 +28,54 @@ import authRouter from './routes/auth.js';
 import documentsRouter from './routes/documents.js';
 import jurisdictionsRouter from './routes/jurisdictions.js';
 
-const app = express();
+const app: ReturnType<typeof express> = express();
 
-// Security middleware
-app.use(helmet());
-app.use(cors());
+// SECURITY: Disable X-Powered-By header
+app.disable('x-powered-by');
 
-// Body parsing
-app.use(express.json({ limit: `${env.MAX_FILE_SIZE_MB}mb` }));
-app.use(express.urlencoded({ extended: true }));
+// SECURITY: Trust first proxy for correct IP detection (req.ip)
+if (env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
+// SECURITY: Helmet with strict CSP and security headers
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:'],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        frameAncestors: ["'none'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
+      },
+    },
+    crossOriginEmbedderPolicy: true,
+    crossOriginOpenerPolicy: true,
+    crossOriginResourcePolicy: { policy: 'same-origin' },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  }),
+);
+
+// SECURITY: Restrict CORS to known origins in production
+app.use(
+  cors({
+    origin: env.NODE_ENV === 'production' ? false : true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id'],
+    maxAge: 600,
+  }),
+);
+
+// Body parsing with strict limits
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Request ID
@@ -80,7 +119,7 @@ app.use(errorHandler);
 const server = app.listen(env.PORT, () => {
   logger.info({
     module: 'server',
-    message: `LexVault API server listening on port ${env.PORT}`,
+    message: `Lex Terrae API server listening on port ${env.PORT}`,
     environment: env.NODE_ENV,
   });
 });

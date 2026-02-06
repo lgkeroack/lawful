@@ -4,7 +4,7 @@ import { Check, X, AlertCircle } from 'lucide-react';
 import { Button } from '../common/Button';
 import { Input } from '../common/Input';
 import { useAuthStore } from '../../stores/authStore';
-import { PASSWORD_MIN_LENGTH } from '@lexvault/shared';
+import { PASSWORD_MIN_LENGTH } from '@lexterrae/shared';
 
 const PASSWORD_REQUIREMENTS = [
   { label: `At least ${PASSWORD_MIN_LENGTH} characters`, test: (p: string) => p.length >= PASSWORD_MIN_LENGTH },
@@ -74,7 +74,7 @@ export function RegisterForm() {
       <div>
         <h2 className="text-lg font-semibold text-gray-900">Create account</h2>
         <p className="mt-1 text-sm text-gray-500">
-          Get started with LexVault.
+          Get started with Lex Terrae.
         </p>
       </div>
 

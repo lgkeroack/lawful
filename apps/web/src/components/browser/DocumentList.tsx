@@ -12,7 +12,7 @@ import {
   Download,
 } from 'lucide-react';
 import { useDocumentStore } from '../../stores/documentStore';
-import type { DocumentQueryParams } from '@lexvault/shared';
+import type { DocumentQueryParams } from '@lexterrae/shared';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { LoadingSpinner } from '../common/LoadingSpinner';

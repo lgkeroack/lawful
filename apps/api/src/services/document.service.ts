@@ -279,17 +279,17 @@ export class DocumentService {
 
     if (title !== undefined && title !== existing.title) {
       updateData.title = title;
-      changes.title = { from: existing.title, to: title };
+      changes['title'] = { from: existing.title, to: title };
     }
 
     if (description !== undefined && description !== existing.description) {
       updateData.description = description;
-      changes.description = { from: existing.description, to: description };
+      changes['description'] = { from: existing.description, to: description };
     }
 
     if (tags !== undefined) {
       updateData.tags = tags;
-      changes.tags = { from: existing.tags, to: tags };
+      changes['tags'] = { from: existing.tags, to: tags };
     }
 
     if (Object.keys(updateData).length === 0) {

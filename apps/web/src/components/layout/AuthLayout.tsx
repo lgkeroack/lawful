@@ -14,7 +14,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
           <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600">
             <MapPin className="h-7 w-7 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">LexVault</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Lex Terrae</h1>
           <p className="mt-1 text-sm text-gray-500">
             Canadian Legal Document Management
           </p>

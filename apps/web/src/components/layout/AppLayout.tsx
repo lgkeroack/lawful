@@ -39,7 +39,7 @@ export function AppLayout() {
           {/* Logo / Title */}
           <div className="flex h-16 items-center gap-2 border-b border-gray-200 px-6">
             <MapPin className="h-6 w-6 text-blue-600" />
-            <h1 className="text-xl font-bold text-gray-900">LexVault</h1>
+            <h1 className="text-xl font-bold text-gray-900">Lex Terrae</h1>
             {/* Close button for mobile */}
             <button
               className="ml-auto rounded-md p-1 text-gray-400 hover:bg-gray-100 lg:hidden"
@@ -105,7 +105,7 @@ export function AppLayout() {
           </button>
           <div className="ml-3 flex items-center gap-2">
             <MapPin className="h-5 w-5 text-blue-600" />
-            <span className="text-lg font-bold text-gray-900">LexVault</span>
+            <span className="text-lg font-bold text-gray-900">Lex Terrae</span>
           </div>
         </header>
 

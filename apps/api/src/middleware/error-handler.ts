@@ -35,7 +35,7 @@ export function errorHandler(err: Error, req: Request, res: Response, _next: Nex
     });
 
     const problem: RFC7807Problem = {
-      type: 'https://lexvault.io/problems/validation-error',
+      type: 'https://lexterrae.io/problems/validation-error',
       title: 'Validation Error',
       status: validationError.statusCode,
       detail: validationError.message,
@@ -63,7 +63,7 @@ export function errorHandler(err: Error, req: Request, res: Response, _next: Nex
     });
 
     const problem: RFC7807Problem = {
-      type: `https://lexvault.io/problems/${err.code.toLowerCase().replace(/_/g, '-')}`,
+      type: `https://lexterrae.io/problems/${err.code.toLowerCase().replace(/_/g, '-')}`,
       title: err.code.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
       status: err.statusCode,
       detail: err.message,
@@ -94,7 +94,7 @@ export function errorHandler(err: Error, req: Request, res: Response, _next: Nex
   });
 
   const problem: RFC7807Problem = {
-    type: 'https://lexvault.io/problems/internal-error',
+    type: 'https://lexterrae.io/problems/internal-error',
     title: 'Internal Server Error',
     status: 500,
     detail: 'An unexpected error occurred',

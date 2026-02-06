@@ -11,7 +11,7 @@ import {
   File,
   ChevronRight,
 } from 'lucide-react';
-import type { DocumentWithJurisdictions } from '@lexvault/shared';
+import type { DocumentWithJurisdictions } from '@lexterrae/shared';
 import { useDocumentStore } from '../../stores/documentStore';
 import { Button } from '../common/Button';
 import { Input } from '../common/Input';

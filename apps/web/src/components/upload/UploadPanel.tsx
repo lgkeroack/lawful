@@ -13,7 +13,7 @@ import {
   ALLOWED_MIME_TYPES,
   MAX_TITLE_LENGTH,
   MAX_DESCRIPTION_LENGTH,
-} from '@lexvault/shared';
+} from '@lexterrae/shared';
 
 const ACCEPTED_EXTENSIONS = ['.pdf', '.txt'];
 

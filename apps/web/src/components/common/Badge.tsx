@@ -1,6 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
-import type { JurisdictionLevel } from '@lexvault/shared';
+import type { JurisdictionLevel } from '@lexterrae/shared';
 
 interface BadgeProps {
   label: string;

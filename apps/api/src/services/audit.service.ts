@@ -1,5 +1,7 @@
-import { createHash } from 'node:crypto';
+import { createHmac } from 'node:crypto';
+import type { Prisma } from '@prisma/client';
 import { prisma } from '../config/database.js';
+import { env } from '../config/env.js';
 import { createModuleLogger } from '../lib/logger.js';
 
 const logger = createModuleLogger('audit.service');
@@ -29,7 +31,7 @@ export class AuditService {
           action: entry.action,
           resourceType: entry.resourceType,
           resourceId: entry.resourceId,
-          changes: entry.changes ?? undefined,
+          changes: entry.changes as Prisma.InputJsonValue ?? undefined,
           requestId: entry.requestId,
           outcome: entry.outcome,
           failureReason: entry.failureReason ?? null,
@@ -56,10 +58,11 @@ export class AuditService {
   }
 
   /**
-   * Hashes an IP address using SHA-256 for privacy-preserving storage.
+   * Hashes an IP address using HMAC-SHA256 keyed with JWT_SECRET.
+   * Keyed hash prevents rainbow-table attacks against the limited IPv4 space.
    */
   hashIP(ip: string): string {
-    return createHash('sha256').update(ip).digest('hex');
+    return createHmac('sha256', env.JWT_SECRET).update(ip).digest('hex');
   }
 }
 

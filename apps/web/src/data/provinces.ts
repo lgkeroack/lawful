@@ -1,4 +1,4 @@
-import type { ProvinceData } from '@lexvault/shared';
+import type { ProvinceData } from '@lexterrae/shared';
 
 export const PROVINCES: ProvinceData[] = [
   {
